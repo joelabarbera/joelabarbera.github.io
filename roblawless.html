@@ -22,7 +22,84 @@
     }
   </style>
 </head>
-<body><script src="https://apis.google.com/js/api.js"></script>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="coaches.html">Meet Your Coaches</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+        </div>
+    </nav>
+
+<div class="py-5 bg-secondary text-white">
+  <div class="container">
+    <h1 class="display-4 text-center">The Bowling Lab</h1>
+    <p class="lead text-center">Professional Bowling Instruction</p>
+  </div>
+</div>
+
+
+<div class="container-fluid">
+  <div class="row mt-5">
+
+
+    <div class="col-md-5 offset-md-1">
+      <div class="bg-light p-4 rounded shadow">
+        <img
+          src="logo.jpeg" alt="Rabs" class="img-fluid mb-3"
+          style="width:300px;height:200px";>
+      </div>
+    </div>
+
+
+    <div class="col-md-5">
+      <div class="bg-light p-4 rounded shadow">
+        <h4>What I can help with</h4>
+        <ul class="list-unstyled d-flex flex-column align-items-center">
+          <li>Form</li>
+          <li>Rev Rate</li>
+          <li>Ball Selection</li>
+          <li>Bowling IQ</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="row mt-4">
+    <div class="col-md-6 offset-md-3 text-center">
+      <a href="booking.html" class="btn btn-primary btn-lg">Book a Coaching Session</a>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col-md-6 offset-md-3">
+      <div class="bg-light p-4 rounded shadow">
+        <h4 class="mb-3">Check Session Availability</h4>
+        <div class="d-grid gap-2">
+          <button id="checkAvailability" class="btn btn-success">Check Available Times</button>
+        </div>
+        <div id="availabilityResults" class="mt-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-5 mb-5">
+    <div class="col-md-6 offset-md-3 text-center">
+      <h4 class="mb-3">Learn More About Junior Bowling</h4>
+      <a href="https://www.youtube.com/watch?v=LRtENvbXF4M">
+        <img src="https://bowl.com/getmedia/134df262-e2f8-48fe-ae00-b70935085064/071923_Day3_845x476.jpg" alt="Click here to learn about JR bowling"
+             style="width:300px;height:200px;" class="img-fluid center">
+      </a>
+    </div>
+  </div>
+</div>
+
+<script src="https://apis.google.com/js/api.js"></script>
 <script>
   const CLIENT_ID = '342271731749-d9g4kcrq57lip8g8qv4ijipdjpin7moe.apps.googleusercontent.com';
   const API_KEY = 'AIzaSyDt5OO6XrRuC_4YS72dwtHTFUp6OyDPPp0';
@@ -54,22 +131,29 @@
     const dayStart = new Date('2025-05-07T08:00:00-04:00');
     const dayEnd = new Date('2025-05-07T18:00:00-04:00');
 
-    const busy = [{ start: '2025-05-07T10:00:00-04:00', end: '2025-05-07T11:00:00-04:00' }];
+    gapi.client.calendar.freebusy.query({
+      timeMin: dayStart.toISOString(),
+      timeMax: dayEnd.toISOString(),
+      timeZone: 'America/New_York',
+      items: [{ id: 'primary' }]
+    }).then(res => {
+      const busy = res.result.calendars?.primary?.busy || [];
 
-    const slots = [];
-    let current = new Date(dayStart);
-    while (current < dayEnd) {
-      const next = new Date(current.getTime() + 30 * 60 * 1000);
-      const overlaps = busy.some(b => {
-        return new Date(b.start) < next && new Date(b.end) > current;
-      });
-      if (!overlaps) {
-        slots.push({ start: current.toISOString(), end: next.toISOString() });
+      const slots = [];
+      let current = new Date(dayStart);
+      while (current < dayEnd) {
+        const next = new Date(current.getTime() + 30 * 60 * 1000);
+        const overlaps = busy.some(b => {
+          return new Date(b.start) < next && new Date(b.end) > current;
+        });
+        if (!overlaps) {
+          slots.push({ start: current.toISOString(), end: next.toISOString() });
+        }
+        current = next;
       }
-      current = next;
-    }
 
-    showAvailableSlots(slots);
+      showAvailableSlots(slots);
+    });
   }
 
   function showAvailableSlots(slots) {
@@ -110,6 +194,7 @@
 
   gapiLoad();
 </script>
+
 
 </body>
 </html>
