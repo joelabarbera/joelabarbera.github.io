@@ -3,21 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Petfinder</title>
-    meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>The Bowling Lab</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="coaches.html">Meet Your Coaches</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
 
-        </div>
-    </nav>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="coaches.html">Meet Your Coaches</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
 
 <div class="py-5 bg-secondary text-white">
   <div class="container">
@@ -26,32 +24,79 @@
   </div>
 </div>
 
-
 <div class="container-fluid">
   <div class="row mt-5">
 
-
     <div class="col-md-5 offset-md-1">
       <div class="bg-light p-4 rounded shadow">
-        <img
-          src="logo.jpeg" alt="Rabs" class="img-fluid mb-3"
-          style="width:300px;height:200px";>
+        <h2>Find a Dog!</h2>
+        <button class="btn btn-primary mt-3" onclick="dogs_nearby()">Show Nearby Dogs</button>
+        <p id="dogs_nearby" class="mt-3"></p>
       </div>
     </div>
 
-
     <div class="col-md-5">
       <div class="bg-light p-4 rounded shadow">
-        <h4>What I can help with</h4>
-        <ul class="list-unstyled d-flex flex-column align-items-center">
-          <li>Form</li>
-          <li>Rev Rate</li>
-          <li>Ball Selection</li>
-          <li>Bowling IQ</li>
-        </ul>
+        <h2>Find a Cat!</h2>
+        <button class="btn btn-primary mt-3" onclick="cats_nearby()">Show Nearby Cats</button>
+        <p id="cat_nearby" class="mt-3"></p>
       </div>
     </div>
 
   </div>
+</div>
+
+<script>
+  const CLIENT_ID = 'qM32lDA0HFDeErMQyq91LNdWUBq4VwAjokdHPXAYyIr2z6r4bx';
+  const CLIENT_SECRET = 'upRDXd4Rc2gqSkJMudPG88lAL8wwV4fVwf9YNl3b';
+
+  async function getToken() {
+    const response = await fetch('https://api.petfinder.com/v2/oauth2/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        grant_type: 'client_credentials',
+        client_id: CLIENT_ID,
+        client_secret: CLIENT_SECRET
+      })
+    });
+    const data = await response.json();
+    return data.access_token;
+  }
+
+  async function dogs_nearby() {
+    document.getElementById('dogs_nearby').innerText = "Fetching dogs...";
+    const token = await getToken();
+    const res = await fetch('https://api.petfinder.com/v2/animals?type=dog&location=10001', {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const data = await res.json();
+
+    let output = "";
+    data.animals.slice(0, 5).forEach(dog => {
+      output += `${dog.name} is a ${dog.age} ${dog.breeds.primary}<br>`;
+    });
+
+    document.getElementById('dogs_nearby').innerHTML = output;
+  }
+
+  async function cats_nearby() {
+    document.getElementById('cat_nearby').innerText = "Fetching cats...";
+    const token = await getToken();
+    const res = await fetch('https://api.petfinder.com/v2/animals?type=cat&location=10001', {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const data = await res.json();
+
+    let output = "";
+    data.animals.slice(0, 5).forEach(cat => {
+      output += `${cat.name} is a ${cat.age} ${cat.breeds.primary}<br>`;
+    });
+
+    document.getElementById('cat_nearby').innerHTML = output;
+  }
+</script>
+
+
 </body>
 </html>
