@@ -87,6 +87,7 @@
           <button id="checkAvailability" class="btn btn-success">Check Available Times</button>
         </div>
         <div id="availabilityResults" class="mt-3"></div>
+        <p id="displayOutput"></p>
       </div>
     </div>
   </div>
@@ -130,22 +131,89 @@
   });
 }
 
-// Call this function when your page loads
-// document.addEventListener('DOMContentLoaded', initGoogleAPI);
+ document.addEventListener('DOMContentLoaded', () => {
+  initGoogleAPI();
+
+  document.getElementById('checkAvailability').addEventListener('click', () => {
+    const authInstance = gapi.auth2.getAuthInstance();
+    if (authInstance && authInstance.isSignedIn.get()) {
+      const accessToken = authInstance.currentUser.get().getAuthResponse().access_token;
+      checkCalendarAvailability(accessToken);
+    } else {
+      authInstance.signIn().then(() => {
+        const accessToken = authInstance.currentUser.get().getAuthResponse().access_token;
+        checkCalendarAvailability(accessToken);
+      });
+    }
+  });
+});
+
+
 
   function checkCalendarAvailability(accessToken) {
-     const curr_date = new Date();
+    const curr_date = new Date();
+    const today = new Date(curr_date.toDateString());
 
-     //Lesson Block 9am-5pm
-     const startTime = new Date(today);
-     startTime.setHours(9, 0, 0, 0);
+    //Lesson Block 9am-5pm
+    const startTime = new Date(today);
+    startTime.setHours(9, 0, 0, 0);
 
-     const endTime = new Date(today);
-     endTime.setHours(17, 0, 0, 0);
+    const endTime = new Date(today);
+    endTime.setHours(17, 0, 0, 0);
 
-     const formatted_AM_time = startTime.toISOString();
-     const formatted_PM_time = endTime.toISOString();
+    const formatted_AM_time = startTime.toISOString();
+    const formatted_PM_time = endTime.toISOString();
+
+    const requestBody = {
+      timeMin: formatted_AM_time,
+      timeMax: formatted_PM_time,
+      timeZone: 'America/New_York',
+      items: [{id: 'primary'}]
+    };
+
+    fetch('https://www.googleapis.com/calendar/v3/freeBusy', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestBody)
+    })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+              return response.json();
+            })
+            .then(data => {
+              const busyTimes = data.calendars.primary.busy;
+              console.log('Busy Times:', busyTimes);
+              displayBusyTimes(busyTimes);
+            })
+            .catch(error => {
+              console.error('Error checking calendar:', error);
+            });
   }
+
+  function displayBusyTimes(busyTimes) {
+    const output = document.getElementById('displayOutput');
+
+    if (busyTimes.length === 0) {
+      output.textContent = 'No busy times today – all slots available!';
+      return;
+    }
+
+    const formattedTimes = [];
+    for (let i = 0; i < busyTimes.length; i++) {
+      const start = new Date(busyTimes[i].start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const end = new Date(busyTimes[i].end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      formattedTimes.push(`${start} - ${end}`);
+    }
+
+    output.textContent = `Coach is busy during: ${formattedTimes.join(', ')}`;
+  }
+
+
 </script>
 
 </html>
