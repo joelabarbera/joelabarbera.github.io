@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Meet your new Cat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        h1 {text-align: center}
+
+        .center {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+        }
+  </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="petfiner.html">Home Page</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </nav>
+
+    <h1 id ="curr_name">Loading...</h1>
+    <img src = "https://media.istockphoto.com/id/115883039/photo/four-kittens-posing.jpg?s=612x612&w=0&k=20&c=0Zu0HMg88MZ-0yc9L20r64pvnUDiws0M532-CCJ6ctI=" style="width:450px;height:300px" class = "center">
+    <h2 id = "output"> </h2>
+    <ul>
+      <li><strong>Age:</strong> <span id="curr_age"></span></li>
+      <li><strong>Breed:</strong> <span id="curr_breed"></span></li>
+      <li><strong>City:</strong> <span id="curr_city"></span></li>
+      <li><strong>Email:</strong> <span id="curr_email"></span></li>
+      <li><strong>Phone:</strong> <span id="curr_phone"></span></li>
+      <li><strong>Org ID:</strong> <span id="curr_org"></span></li>
+    </ul>
+
+</body>
+<script>
+  const params = new URLSearchParams(window.location.search);
+
+  const name = params.get("name");
+  const age = params.get("age");
+  const breed = params.get("breed");
+  const city = params.get("city");
+  const email = params.get("email");
+  const phone = params.get("phone");
+  const org = params.get("org");
+
+  document.getElementById("curr_name").innerText = name;
+  document.getElementById("curr_age").innerText = age;
+  document.getElementById("curr_breed").innerText = breed;
+  document.getElementById("curr_city").innerText = city;
+  document.getElementById("curr_email").innerText = email;
+  document.getElementById("curr_phone").innerText = phone;
+  document.getElementById("curr_org").innerText = org;
+</script>
+</html>

@@ -16,15 +16,6 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container">
-    <a class="navbar-brand" href="coaches.html">Meet Your Coaches</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  </div>
-</nav>
-
 <div class="py-5 bg-secondary text-white">
   <div class="container">
     <h1 class="display-4 text-center">Find a Pet!</h1>
@@ -83,10 +74,21 @@
     const data = await res.json();
     dogArray = data.animals;
     let output = "";
-    data.animals.slice(0, 5).forEach(dog => {
-      output += `<a href="show_pet.html?name=${encodeURIComponent(dog.name)}">${dog.name}</a> is a ${dog.age} ${dog.breeds.primary}<br>`;
+    for (let i = 0; i < animals.length; i++) {
+      const cat = animals[i];
+
+      const name = encodeURIComponent(dog.name);
+      const age = encodeURIComponent(dog.age);
+      const breed = encodeURIComponent(dog.breeds.primary);
+      const city = encodeURIComponent(dog.contact.address.city);
+      const org = encodeURIComponent(dog.organization_id);
+      const mail = encodeURIComponent(dog.contact.email || "N/A");
+      const phone = encodeURIComponent(dog.contact.phone || "N/A");
+
+      output += `<a href="show_cat.html?name=${name}&age=${age}&breed=${breed}&city=${city}&email=${mail}&phone=${phone}&org=${org}">${dog.name}</a> is a ${dog.age} ${dog.breeds.primary}<br>`;
       output += `Distance: ${dog.distance.toFixed(1)} miles away<br><br>`;
-    });
+
+    }
 
     document.getElementById('dogs_nearby').innerHTML = output;
   }
@@ -103,11 +105,23 @@
     catArray = data.animals;
 
     let output = "";
-    data.animals.slice(0, 5).forEach(cat => {
-      output += `<a href="show_pet.html?name=${encodeURIComponent(cat.name)}">${cat.name}</a> is a ${cat.age} ${cat.breeds.primary}<br>`;
-      output += `Distance: ${cat.distance.toFixed(1)} miles away<br><br>`;
+    let animals = data.animals.slice(0, 5);
 
-    });
+    for (let i = 0; i < animals.length; i++) {
+      const cat = animals[i];
+
+      const name = encodeURIComponent(cat.name);
+      const age = encodeURIComponent(cat.age);
+      const breed = encodeURIComponent(cat.breeds.primary);
+      const city = encodeURIComponent(cat.contact.address.city);
+      const org = encodeURIComponent(cat.organization_id);
+      const mail = encodeURIComponent(cat.contact.email || "N/A");
+      const phone = encodeURIComponent(cat.contact.phone || "N/A");
+
+      output += `<a href="show_cat.html?name=${name}&age=${age}&breed=${breed}&city=${city}&email=${mail}&phone=${phone}&org=${org}">${cat.name}</a> is a ${cat.age} ${cat.breeds.primary}<br>`;
+      output += `Distance: ${dog.distance.toFixed(1)} miles away<br><br>`;
+
+    }
 
     document.getElementById('cat_nearby').innerHTML = output;
   }
