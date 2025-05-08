@@ -63,7 +63,8 @@
     return data.access_token;
   }
 
-  let dogArray = []
+  let dogArray = [];
+
   async function dogs_nearby() {
     document.getElementById('dogs_nearby').innerText = "Fetching dogs...";
     const token = await getToken();
@@ -73,9 +74,12 @@
     });
     const data = await res.json();
     dogArray = data.animals;
+
     let output = "";
+    let animals = data.animals.slice(0, 5);
+
     for (let i = 0; i < animals.length; i++) {
-      const cat = animals[i];
+      const dog = animals[i];
 
       const name = encodeURIComponent(dog.name);
       const age = encodeURIComponent(dog.age);
@@ -87,13 +91,13 @@
 
       output += `<a href="show_cat.html?name=${name}&age=${age}&breed=${breed}&city=${city}&email=${mail}&phone=${phone}&org=${org}">${dog.name}</a> is a ${dog.age} ${dog.breeds.primary}<br>`;
       output += `Distance: ${dog.distance.toFixed(1)} miles away<br><br>`;
-
     }
 
     document.getElementById('dogs_nearby').innerHTML = output;
   }
 
-  let catArray = []
+
+  let catArray = [];
   async function cats_nearby() {
     document.getElementById('cat_nearby').innerText = "Fetching cats...";
     const token = await getToken();
@@ -119,12 +123,12 @@
       const phone = encodeURIComponent(cat.contact.phone || "N/A");
 
       output += `<a href="show_cat.html?name=${name}&age=${age}&breed=${breed}&city=${city}&email=${mail}&phone=${phone}&org=${org}">${cat.name}</a> is a ${cat.age} ${cat.breeds.primary}<br>`;
-      output += `Distance: ${dog.distance.toFixed(1)} miles away<br><br>`;
-
-    }
-
-    document.getElementById('cat_nearby').innerHTML = output;
+      output += `Distance: ${cat.distance.toFixed(1)} miles away<br><br>`;
   }
+
+  document.getElementById('cat_nearby').innerHTML = output;
+}
+
 </script>
 
 </body>
