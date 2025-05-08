@@ -111,7 +111,7 @@
       const phone = encodeURIComponent(dog.contact.phone || "N/A");
       const image = encodeURIComponent(dog.photos[0]?.medium || "");
 
-      output += `<a href="show_cat.html?name=${name}&age=${age}&breed=${breed}&city=${city}&email=${mail}&phone=${phone}&image=${image}&org=${org}">${dog.name}</a> is a ${dog.age} ${dog.breeds.primary}<br>`;
+      output += `<a href="show_dog.html?name=${name}&age=${age}&breed=${breed}&city=${city}&email=${mail}&phone=${phone}&image=${image}&org=${org}">${dog.name}</a> is a ${dog.age} ${dog.breeds.primary}<br>`;
       output += `Distance: ${dog.distance.toFixed(1)} miles away<br><br>`;
     }
 
