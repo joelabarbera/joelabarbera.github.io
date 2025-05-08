@@ -7,6 +7,17 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
 
+    html, body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body > .content {
+      flex: 1;
+    }
+
     body {
       background-color: #e6f7ff; /* light sky blue */
     }
@@ -31,39 +42,53 @@
 </head>
 <body>
 
-<div class="py-5 bg-secondary text-white">
-  <div class="container">
-    <h1 class="display-4 text-center">Find a Pet!</h1>
-    <p class="lead text-center">Finding your newest friend!</p>
+<div class = "content">
+  <div class="py-5 bg-secondary text-white">
+    <div class="container d-flex align-items-center justify-content-center">
+      <img src="https://media.istockphoto.com/id/931785704/vector/paw_print.jpg?s=612x612&w=0&k=20&c=CXBPHlf7XHdJiiOULJrI9nGZjVNAj7cqnkM_eDyDdCU="
+           alt="Pet icon" style="width: 60px; height: 60px; margin-right: 15px;">
+      <h1 class="display-4 m-0">Find a Pet!</h1>
+    </div>
+    <p class="lead text-center mt-3">Finding your newest friend!</p>
+  </div>
+
+
+  <div class="container-fluid">
+    <div class="row mt-5">
+
+      <div class="col-md-5 offset-md-1">
+        <div class="bg-light p-4 rounded shadow">
+          <h2>Find a Dog!</h2>
+          <button class="btn btn-primary center-button" onclick="dogs_nearby()">Show Nearby Dogs</button>
+          <p id="dogs_nearby" class="mt-3"></p>
+        </div>
+      </div>
+
+      <div class="col-md-5">
+        <div class="bg-light p-4 rounded shadow">
+          <h2>Find a Cat!</h2>
+          <button class="btn btn-primary center-button" onclick="cats_nearby()">Show Nearby Cats</button>
+          <p id="cat_nearby" class="mt-3"></p>
+        </div>
+      </div>
+
+      <h3 class="mt-5 text-center"> Undecided? Take a quiz below to see if your a Cat or Dog person</h3>
+      <a href = "https://addictionpet.com/blog/quiz-are-you-a-dog-person-or-a-cat-person/">
+      <img src = "https://www.webbox.co.uk/wp-content/uploads/2019/04/shutterstock_1095001973.jpg" alt = "Cat/Dog" style="width:450px;height:300px" class = "center">
+      </a>
+
+    </div>
   </div>
 </div>
+<footer class="bg-dark text-white text-center py-4 mt-5">
+  <p class="mb-1">© 2025 Find a Pet. All rights reserved.</p>
+  <p class="mb-0">
+    <a href="#" class="text-white text-decoration-underline">About Us</a> |
+    <a href="#" class="text-white text-decoration-underline">Contact</a> |
+    <a href="#" class="text-white text-decoration-underline">Privacy Policy</a>
+  </p>
+</footer>
 
-<div class="container-fluid">
-  <div class="row mt-5">
-
-    <div class="col-md-5 offset-md-1">
-      <div class="bg-light p-4 rounded shadow">
-        <h2>Find a Dog!</h2>
-        <button class="btn btn-primary center-button" onclick="dogs_nearby()">Show Nearby Dogs</button>
-        <p id="dogs_nearby" class="mt-3"></p>
-      </div>
-    </div>
-
-    <div class="col-md-5">
-      <div class="bg-light p-4 rounded shadow">
-        <h2>Find a Cat!</h2>
-        <button class="btn btn-primary center-button" onclick="cats_nearby()">Show Nearby Cats</button>
-        <p id="cat_nearby" class="mt-3"></p>
-      </div>
-    </div>
-
-    <h3 class="mt-5 text-center"> Undecided? Take a quiz below to see if your a Cat or Dog person</h3>
-    <a href = "https://addictionpet.com/blog/quiz-are-you-a-dog-person-or-a-cat-person/">
-    <img src = "https://www.webbox.co.uk/wp-content/uploads/2019/04/shutterstock_1095001973.jpg" alt = "Cat/Dog" style="width:450px;height:300px" class = "center">
-    </a>
-
-  </div>
-</div>
 
 <script>
   const CLIENT_ID = 'qM32lDA0HFDeErMQyq91LNdWUBq4VwAjokdHPXAYyIr2z6r4bx';
@@ -89,6 +114,12 @@
     document.getElementById('dogs_nearby').innerText = "Fetching dogs...";
     const token = await getToken();
     let zip = prompt("Enter your zip code:");
+    zip = parseInt(zip);
+
+    if (isNaN(zip) || zip < 10000 || zip > 99999) {
+      alert("Please enter a valid 5-digit ZIP code.");
+      return;
+    }
 
     const res = await fetch(`https://api.petfinder.com/v2/animals?type=dog&location=${zip}&sort=distance`, {
       headers: { Authorization: `Bearer ${token}` }
@@ -124,6 +155,13 @@
     document.getElementById('cat_nearby').innerText = "Fetching cats...";
     const token = await getToken();
     let zip = prompt("Enter your zip code:");
+    zip = parseInt(zip);
+
+    if (isNaN(zip) || zip < 10000 || zip > 99999) {
+      alert("Please enter a valid 5-digit ZIP code.");
+      return;
+    }
+
     const res = await fetch(`https://api.petfinder.com/v2/animals?type=cat&location=${zip}&sort=distance`, {
       headers: { Authorization: `Bearer ${token}` }
     });
