@@ -1,22 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Petfinder</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-      h2 {text-align: center}
-
-      .center-button {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-      }
-</style>
-
-    </style>
+  <meta charset="UTF-8">
+  <title>Petfinder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    h2 {text-align: center}
+    .center-button {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
 </head>
 <body>
 
@@ -42,7 +38,7 @@
     <div class="col-md-5 offset-md-1">
       <div class="bg-light p-4 rounded shadow">
         <h2>Find a Dog!</h2>
-        <button class="btn btn-primary mt-3" onclick="dogs_nearby()">Show Nearby Dogs</button>
+        <button class="btn btn-primary center-button" onclick="dogs_nearby()">Show Nearby Dogs</button>
         <p id="dogs_nearby" class="mt-3"></p>
       </div>
     </div>
@@ -50,7 +46,7 @@
     <div class="col-md-5">
       <div class="bg-light p-4 rounded shadow">
         <h2>Find a Cat!</h2>
-        <button class="btn btn-primary mt-3" onclick="cats_nearby()">Show Nearby Cats</button>
+        <button class="btn btn-primary center-button" onclick="cats_nearby()">Show Nearby Cats</button>
         <p id="cat_nearby" class="mt-3"></p>
       </div>
     </div>
@@ -76,39 +72,46 @@
     return data.access_token;
   }
 
+  let dogArray = []
   async function dogs_nearby() {
     document.getElementById('dogs_nearby').innerText = "Fetching dogs...";
     const token = await getToken();
-    const res = await fetch('https://api.petfinder.com/v2/animals?type=dog&location=10001', {
+    let zip = prompt("Enter your zip code:");
+    const res = await fetch(`https://api.petfinder.com/v2/animals?type=dog&location=${zip}&sort=distance`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     const data = await res.json();
-
+    dogArray = data.animals;
     let output = "";
     data.animals.slice(0, 5).forEach(dog => {
-      output += `${dog.name} is a ${dog.age} ${dog.breeds.primary}<br>`;
+      output += `<a href="show_pet.html?name=${encodeURIComponent(dog.name)}">${dog.name}</a> is a ${dog.age} ${dog.breeds.primary}<br>`;
+      output += `Distance: ${dog.distance.toFixed(1)} miles away<br><br>`;
     });
 
     document.getElementById('dogs_nearby').innerHTML = output;
   }
 
+  let catArray = []
   async function cats_nearby() {
     document.getElementById('cat_nearby').innerText = "Fetching cats...";
     const token = await getToken();
-    const res = await fetch('https://api.petfinder.com/v2/animals?type=cat&location=10001', {
+    let zip = prompt("Enter your zip code:");
+    const res = await fetch(`https://api.petfinder.com/v2/animals?type=cat&location=${zip}&sort=distance`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     const data = await res.json();
+    catArray = data.animals;
 
     let output = "";
     data.animals.slice(0, 5).forEach(cat => {
-      output += `${cat.name} is a ${cat.age} ${cat.breeds.primary}<br>`;
+      output += `<a href="show_pet.html?name=${encodeURIComponent(cat.name)}">${cat.name}</a> is a ${cat.age} ${cat.breeds.primary}<br>`;
+      output += `Distance: ${cat.distance.toFixed(1)} miles away<br><br>`;
+
     });
 
     document.getElementById('cat_nearby').innerHTML = output;
   }
 </script>
-
 
 </body>
 </html>
