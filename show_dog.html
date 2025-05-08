@@ -14,6 +14,21 @@
           margin-left: auto;
           margin-right: auto;
         }
+
+        div.container {
+          text-align: center;
+        }
+
+        ul.myUL {
+          display: inline-block;
+          text-align: left;
+        }
+
+        .center-table {
+          margin-left: auto;
+          margin-right: auto;
+        }
+
   </style>
 </head>
 <body>
@@ -29,17 +44,61 @@
 
     <h1 id ="curr_name">Loading...</h1>
     <img src = "https://news.harvard.edu/wp-content/uploads/2023/11/dog_brains_2500.png" style="width:450px;height:300px" class = "center">
-    <ul>
-      <li><strong>Age:</strong> <span id="curr_age"></span></li>
-      <li><strong>Breed:</strong> <span id="curr_breed"></span></li>
-      <li><strong>City:</strong> <span id="curr_city"></span></li>
-      <li><strong>Email:</strong> <span id="curr_email"></span></li>
-      <li><strong>Phone:</strong> <span id="curr_phone"></span></li>
-      <li><strong>Org ID:</strong> <span id="curr_org"></span></li>
-    </ul>
 
+    <div class = "container">
+        <ul class = "myUl">
+          <li><strong>Age:</strong> <span id="curr_age"></span></li>
+          <li><strong>Breed:</strong> <span id="curr_breed"></span></li>
+          <li><strong>City:</strong> <span id="curr_city"></span></li>
+          <li><strong>Email:</strong> <span id="curr_email"></span></li>
+          <li><strong>Phone:</strong> <span id="curr_phone"></span></li>
+          <li><strong>Org ID:</strong> <span id="curr_org"></span></li>
+        </ul>
+    </div>
+
+    <h2 class="text-center mt-5">Recommendations for New Dog Owners</h2>
+    <table class="table table-bordered table-striped mt-3 center-table" style="width: 75%;">
+      <thead class="table-dark">
+        <tr>
+          <th>Category</th>
+          <th>Recommendation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Food</td>
+          <td>Choose a high-quality dog food appropriate for your dog’s size and age. Ask your vet for guidance.</td>
+        </tr>
+        <tr>
+          <td>Crate Training</td>
+          <td>Introduce a crate early as a safe and calm space. It helps with house training and travel.</td>
+        </tr>
+        <tr>
+          <td>Vet Visits</td>
+          <td>Schedule a wellness checkup and discuss vaccinations, deworming, and microchipping.</td>
+        </tr>
+        <tr>
+          <td>Exercise</td>
+          <td>Most dogs need daily walks and playtime. It keeps them fit and reduces unwanted behavior.</td>
+        </tr>
+        <tr>
+          <td>Training</td>
+          <td>Start basic obedience training early. Use positive reinforcement and consistency.</td>
+        </tr>
+        <tr>
+          <td>Grooming</td>
+          <td>Brush regularly and bathe when needed. Check nails, ears, and teeth as part of a routine.</td>
+        </tr>
+        <tr>
+          <td>Socialization</td>
+          <td>Expose your dog to other dogs, people, and environments early to build confidence.</td>
+        </tr>
+      </tbody>
+    </table>
 
 </body>
+
+
 <script>
   const params = new URLSearchParams(window.location.search);
 

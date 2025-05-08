@@ -14,6 +14,21 @@
           margin-left: auto;
           margin-right: auto;
         }
+
+        div.container {
+          text-align: center;
+        }
+
+        ul.myUL {
+          display: inline-block;
+          text-align: left;
+        }
+
+        .center-table {
+          margin-left: auto;
+          margin-right: auto;
+        }
+
   </style>
 </head>
 <body>
@@ -30,14 +45,57 @@
     <h1 id ="curr_name">Loading...</h1>
     <img src = "https://media.istockphoto.com/id/115883039/photo/four-kittens-posing.jpg?s=612x612&w=0&k=20&c=0Zu0HMg88MZ-0yc9L20r64pvnUDiws0M532-CCJ6ctI=" style="width:450px;height:300px" class = "center">
     <h2 id = "output"> </h2>
-    <ul>
-      <li><strong>Age:</strong> <span id="curr_age"></span></li>
-      <li><strong>Breed:</strong> <span id="curr_breed"></span></li>
-      <li><strong>City:</strong> <span id="curr_city"></span></li>
-      <li><strong>Email:</strong> <span id="curr_email"></span></li>
-      <li><strong>Phone:</strong> <span id="curr_phone"></span></li>
-      <li><strong>Org ID:</strong> <span id="curr_org"></span></li>
-    </ul>
+
+    <div class = "container">
+        <ul class = "myUl">
+          <li><strong>Age:</strong> <span id="curr_age"></span></li>
+          <li><strong>Breed:</strong> <span id="curr_breed"></span></li>
+          <li><strong>City:</strong> <span id="curr_city"></span></li>
+          <li><strong>Email:</strong> <span id="curr_email"></span></li>
+          <li><strong>Phone:</strong> <span id="curr_phone"></span></li>
+          <li><strong>Org ID:</strong> <span id="curr_org"></span></li>
+        </ul>
+    </div>
+
+    <h2 class="text-center mt-5">Recommendations for New Cat Owners</h2>
+    <table class="table table-bordered table-striped mt-3 center-table" style="width: 75%;">
+      <thead class="table-dark">
+        <tr>
+          <th>Category</th>
+          <th>Recommendation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Food</td>
+          <td>Choose a high-quality dry or wet cat food appropriate for your cat’s age.</td>
+        </tr>
+        <tr>
+          <td>Litter Box</td>
+          <td>Scoop daily and clean the entire box at least once a week. One box per cat + one extra is ideal.</td>
+        </tr>
+        <tr>
+          <td>Vet Visits</td>
+          <td>Schedule an initial check-up and keep up with annual vaccinations and exams.</td>
+        </tr>
+        <tr>
+          <td>Scratching Posts</td>
+          <td>Provide scratching posts or pads to protect your furniture and keep claws healthy.</td>
+        </tr>
+        <tr>
+          <td>Toys</td>
+          <td>Offer a variety of toys (balls, feathers, lasers) to keep your cat mentally and physically active.</td>
+        </tr>
+        <tr>
+          <td>ID & Microchip</td>
+          <td>Make sure your cat wears a collar with an ID tag and consider microchipping.</td>
+        </tr>
+        <tr>
+          <td>Patience</td>
+          <td>Give your cat time to adjust to their new home. Let them come to you on their terms.</td>
+        </tr>
+      </tbody>
+    </table>
 
 </body>
 <script>
