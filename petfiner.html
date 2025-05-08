@@ -89,7 +89,7 @@
     document.getElementById('dogs_nearby').innerText = "Fetching dogs...";
     const token = await getToken();
     let zip = prompt("Enter your zip code:");
-    
+
     const res = await fetch(`https://api.petfinder.com/v2/animals?type=dog&location=${zip}&sort=distance`, {
       headers: { Authorization: `Bearer ${token}` }
     });
@@ -109,7 +109,7 @@
       const org = encodeURIComponent(dog.organization_id);
       const mail = encodeURIComponent(dog.contact.email || "N/A");
       const phone = encodeURIComponent(dog.contact.phone || "N/A");
-      const image = encodeURIComponent(cat.photos[0]?.medium || "");
+      const image = encodeURIComponent(dog.photos[0]?.medium || "");
 
       output += `<a href="show_cat.html?name=${name}&age=${age}&breed=${breed}&city=${city}&email=${mail}&phone=${phone}&image=${image}&org=${org}">${dog.name}</a> is a ${dog.age} ${dog.breeds.primary}<br>`;
       output += `Distance: ${dog.distance.toFixed(1)} miles away<br><br>`;
