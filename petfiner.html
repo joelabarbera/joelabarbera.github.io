@@ -12,6 +12,8 @@
       margin-left: auto;
       margin-right: auto;
     }
+
+
   </style>
 </head>
 <body>
@@ -88,8 +90,9 @@
       const org = encodeURIComponent(dog.organization_id);
       const mail = encodeURIComponent(dog.contact.email || "N/A");
       const phone = encodeURIComponent(dog.contact.phone || "N/A");
+      const image = encodeURIComponent(cat.photos[0]?.medium || "");
 
-      output += `<a href="show_cat.html?name=${name}&age=${age}&breed=${breed}&city=${city}&email=${mail}&phone=${phone}&org=${org}">${dog.name}</a> is a ${dog.age} ${dog.breeds.primary}<br>`;
+      output += `<a href="show_cat.html?name=${name}&age=${age}&breed=${breed}&city=${city}&email=${mail}&phone=${phone}&image=${image}&org=${org}">${dog.name}</a> is a ${dog.age} ${dog.breeds.primary}<br>`;
       output += `Distance: ${dog.distance.toFixed(1)} miles away<br><br>`;
     }
 
@@ -121,8 +124,10 @@
       const org = encodeURIComponent(cat.organization_id);
       const mail = encodeURIComponent(cat.contact.email || "N/A");
       const phone = encodeURIComponent(cat.contact.phone || "N/A");
+      const image = encodeURIComponent(cat.photos[0]?.medium || "");
 
-      output += `<a href="show_cat.html?name=${name}&age=${age}&breed=${breed}&city=${city}&email=${mail}&phone=${phone}&org=${org}">${cat.name}</a> is a ${cat.age} ${cat.breeds.primary}<br>`;
+
+      output += `<a href="show_cat.html?name=${name}&age=${age}&breed=${breed}&city=${city}&email=${mail}&phone=${phone}&image=${image}&org=${org}">${cat.name}</a> is a ${cat.age} ${cat.breeds.primary}<br>`;
       output += `Distance: ${cat.distance.toFixed(1)} miles away<br><br>`;
   }
 

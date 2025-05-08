@@ -43,7 +43,7 @@
     </nav>
 
     <h1 id ="curr_name">Loading...</h1>
-    <img src = "https://news.harvard.edu/wp-content/uploads/2023/11/dog_brains_2500.png" style="width:450px;height:300px" class = "center">
+    <img id = "pet_img" src = "" alt = "Dog Image" style="width:450px;height:300px" class = "center">
 
     <div class = "container">
         <ul class = "myUl">
@@ -109,6 +109,7 @@
   const email = params.get("email");
   const phone = params.get("phone");
   const org = params.get("org");
+  const image = params.get("image");
 
   document.getElementById("curr_name").innerText = name;
   document.getElementById("curr_age").innerText = age;
@@ -117,5 +118,6 @@
   document.getElementById("curr_email").innerText = email;
   document.getElementById("curr_phone").innerText = phone;
   document.getElementById("curr_org").innerText = org;
+  document.getElementById("pet_img").src = image;
 </script>
 </html>

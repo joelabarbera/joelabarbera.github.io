@@ -43,7 +43,7 @@
     </nav>
 
     <h1 id ="curr_name">Loading...</h1>
-    <img src = "https://media.istockphoto.com/id/115883039/photo/four-kittens-posing.jpg?s=612x612&w=0&k=20&c=0Zu0HMg88MZ-0yc9L20r64pvnUDiws0M532-CCJ6ctI=" style="width:450px;height:300px" class = "center">
+    <img id = "pet_img" src = "" alt = "Cat Image" style="width:450px;height:300px" class = "center">
     <h2 id = "output"> </h2>
 
     <div class = "container">
@@ -108,6 +108,7 @@
   const email = params.get("email");
   const phone = params.get("phone");
   const org = params.get("org");
+  const image = params.get("image");
 
   document.getElementById("curr_name").innerText = name;
   document.getElementById("curr_age").innerText = age;
@@ -116,5 +117,6 @@
   document.getElementById("curr_email").innerText = email;
   document.getElementById("curr_phone").innerText = phone;
   document.getElementById("curr_org").innerText = org;
+  document.getElementById("pet_img").src = image;
 </script>
 </html>
